@@ -1,4 +1,3 @@
-const NGO = require('../models/ngo')
 
 // Register a new NGO
 const registerNGO = async (req, res) => {

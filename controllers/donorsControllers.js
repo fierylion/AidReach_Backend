@@ -1,4 +1,3 @@
-const Donor = require('../models/donor')
 
 // Register a new donor
 const registerDonor = async (req, res) => {

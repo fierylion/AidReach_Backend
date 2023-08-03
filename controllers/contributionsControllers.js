@@ -1,4 +1,3 @@
-const Contribution = require('../models/contribution')
 
 // Make a new contribution
 const makeContribution = async (req, res) => {

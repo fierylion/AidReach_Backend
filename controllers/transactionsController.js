@@ -1,4 +1,3 @@
-const Transaction = require('../models/transaction')
 
 // Record a new transaction (e.g., donation receipt) in the system
 const recordTransaction = async (req, res) => {

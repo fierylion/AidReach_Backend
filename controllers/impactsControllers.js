@@ -1,4 +1,3 @@
-const Impact = require('../models/impact')
 
 // Record a new impact entry for a specific allocation
 const recordImpact = async (req, res) => {

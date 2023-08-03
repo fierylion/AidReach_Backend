@@ -1,4 +1,4 @@
-const Allocation = require('../models/allocation')
+
 
 // Allocate funds to a specific proposal
 const allocateFunds = async (req, res) => {
