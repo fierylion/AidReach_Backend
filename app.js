@@ -23,6 +23,12 @@ app.get('/', (req, res) => {
 }
 )
 app.use('', transactionsRouter)
+app.use('', donorRouter)
+app.use('', ngoRouter)
+app.use('', proposalsRouter)
+app.use('', impactRouter)
+app.use('', allocationsRouter)
+app.use('', contributionRouter)
 
 app.use(errorHandlerMiddleware)
 app.use(notFoundMiddleware)
