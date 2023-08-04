@@ -10,8 +10,8 @@ const validateTokenMiddleware =async (req,res,next)=>{
     try{
         const token = authorization.split(" ")[1]
         const decode = jwt.verify(token, process.env.JWT_TOKEN)
-        const {id, name} = decode;
-        req.user = {id, name};
+        const {id, type} = decode;
+        req.user = {id, type};
         next();
     }
     catch(err){

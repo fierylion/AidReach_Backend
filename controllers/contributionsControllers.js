@@ -1,7 +1,17 @@
-
+const Contribution = require('../models/Contributions')
+const Donor = require('../models/Donors')
 // Make a new contribution
 const makeContribution = async (req, res) => {
-  // Implementation for making a new contribution
+  const {id:donorId} = req.user;
+  const donation = await Contribution.create({...req.body, donorId})
+  const updateDonor = await Donor.findOneAndUpdate(
+    { _id: donorId },
+    { $inc: { totalDonations: donation.amount } },
+    { new: true }
+  )
+
+  res.status(201).json({message: "Contribution made successfully"})
+
 }
 
 // Get contribution details by ID

@@ -11,6 +11,11 @@ const ngoRouter = require('./routes/ngos')
 const donorRouter = require('./routes/donors')
 const contributionRouter = require('./routes/contributions')
 const impactRouter = require('./routes/impacts')
+const adminRouter = require('./routes/admin')
+const authenticationMiddleware = require('./middleware/authentication')
+const validateDonor = require('./middleware/validateDonors')
+const validateNgo = require('./middleware/validateNgos')
+
 
 
 
@@ -23,12 +28,12 @@ app.get('/', (req, res) => {
 }
 )
 app.use('', transactionsRouter)
-app.use('', donorRouter)
-app.use('', ngoRouter)
-app.use('', proposalsRouter)
-app.use('', impactRouter)
+app.use('/donors', donorRouter)
+app.use('',proposalsRouter)
+app.use('',impactRouter)
 app.use('', allocationsRouter)
-app.use('', contributionRouter)
+app.use('/contributions',authenticationMiddleware, validateDonor, contributionRouter)
+app.use('/admin', adminRouter)
 
 app.use(errorHandlerMiddleware)
 app.use(notFoundMiddleware)

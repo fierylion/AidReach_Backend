@@ -10,7 +10,6 @@ const proposalSchema = new mongoose.Schema({
   },
   totalAmount: { type: Number, required: true },
   allocatedAmount: { type: Number, default: 0 },
-  remainingAmount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 })
 
