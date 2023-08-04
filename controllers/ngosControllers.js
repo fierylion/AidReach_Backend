@@ -35,6 +35,12 @@ const loginNGO = async (req, res) => {
 // Get NGO details by ID
 const getNGOById = async (req, res) => {
   // Implementation to fetch NGO details by ID
+  const {id} = req.params
+  const ngo = await NGO.findById(id);
+  ngo.password = undefined;
+  res.status(status.OK).json({ngo})
+
+
 }
 
 // Update NGO information
