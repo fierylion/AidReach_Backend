@@ -2,9 +2,11 @@
 const { BadRequestError, UnauthenticatedError } = require('../errors')
 const {StatusCodes:status} = require('http-status-codes')
 const Donor = require('../models/Donors')
+const Vote = require('../models/Vote')
 // Register a new donor
 const registerDonor = async (req, res) => {
-  const donor = await DonorSchema.create(req.body)
+  console.log('received request')
+  const donor = await Donor.create(req.body)
   const token = donor.createJwt()
   res.status(status.CREATED).json({ donor: { name: donor.name, email: donor.email }, token })
   
@@ -32,14 +34,34 @@ const loginDonor = async (req, res) => {
 // Get donor details by ID
 const getDonorById = async (req, res) => {
   // Implementation to fetch donor details by ID
-  const {id} = req.params;
+  const {id} = req.user;
   const donor = await Donor.findById(id)
   if(!donor) throw new BadRequestError('No donor with the provided ID')
-  donor.password = undefined;
-  res.status(status.OK).json({donor})
+  const {name, totalDonations, votes, createdAt} = donor;
+  res.status(status.OK).json({donor:{name, totalDonations, votes, createdAt}})
 
 }
 
+//Vote function should be shifted to a separate controller
+const createVote = async (req, res) => {
+  const {stake, vote, reason}= req.body;
+  if(stake&&vote&&reason){
+  const {id:donorId} = req.user;
+  const {propId, cat} = vote;
+  if(!propId||!cat) throw new BadRequestError('Please provide proposal ID and category')
+
+  const vot = await Vote.create({donorId, proposalId:vote.propId, cat, stake, reason })
+  await Donor.findByIdAndUpdate(
+    donorId,
+    { $inc: { votes: 1 } },
+    { new: true }
+  )
+  }
+  res.status(status.CREATED).json({message: "Vote submitted successfully"})
+
+
+}
+  
 // Update donor information
 const updateDonor = async (req, res) => {
   // Implementation to update donor information
@@ -56,4 +78,5 @@ module.exports = {
   getDonorById,
   updateDonor,
   deleteDonor,
+  createVote
 }

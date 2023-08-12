@@ -1,4 +1,5 @@
 require('dotenv').config()
+const cors = require('cors')
 const express = require('express')
 const connectDB = require('./db/connect')
 require('express-async-errors')
@@ -20,7 +21,9 @@ const validateNgo = require('./middleware/validateNgos')
 
 
 const app = express()
+
 app.use(express.json())
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -28,11 +31,12 @@ app.get('/', (req, res) => {
 }
 )
 app.use('', transactionsRouter)
-app.use('/donors', donorRouter)
+app.use('/donor', donorRouter)
+app.use('/ngo', ngoRouter)
 app.use('',proposalsRouter)
-app.use('',impactRouter)
+app.use('/impact',impactRouter)
 app.use('', allocationsRouter)
-app.use('/contributions',authenticationMiddleware, validateDonor, contributionRouter)
+app.use('/contribution',authenticationMiddleware,  contributionRouter)
 app.use('/admin', adminRouter)
 
 app.use(errorHandlerMiddleware)

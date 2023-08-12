@@ -6,10 +6,18 @@ const donorSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   phoneNumber: { type: String, required: true },
-  totalDonations: {type:Number, default:0}
+  country: { type: String, required: true },
+  region: { type: String, required: true },
+  cat: { type: String, required: true },
+  totalDonations: {type:Number, default:0},
+  votes: {type:Number, default:0},
+  
+  createdAt: { type: Date, default: Date.now },
+
 })
 
 donorSchema.pre('save', async function (next) {
+  
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
   next()

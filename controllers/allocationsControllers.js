@@ -3,6 +3,8 @@
 // Allocate funds to a specific proposal
 const allocateFunds = async (req, res) => {
   // Implementation for allocating funds to a specific proposal
+  
+
 }
 
 // Get allocation details by ID

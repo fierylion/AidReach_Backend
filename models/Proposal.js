@@ -2,14 +2,10 @@ const mongoose = require('mongoose')
 
 const proposalSchema = new mongoose.Schema({
   ngoId: { type: mongoose.Schema.Types.ObjectId, ref: 'NGO', required: true },
-  proposalDetails: { type: String, required: true },
-  status: {
-    type: String,
-    enum: ['Pending', 'Approved', 'Rejected'],
-    default: 'Pending',
-  },
-  totalAmount: { type: Number, required: true },
-  allocatedAmount: { type: Number, default: 0 },
+  title: { type: String, required: true },
+  amount: { type: Number, required: true },
+  description: { type: String, required: true },
+  image: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 })
 
