@@ -1,4 +1,5 @@
 const Proposal= require("../models/Proposal");
+const Impact = require('../models/Impacts')
 const NGO = require("../models/Ngos");
 const {StatusCodes:status } = require('http-status-codes')
 // Submit a new proposal by an NGO
