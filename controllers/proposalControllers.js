@@ -15,7 +15,7 @@ const submitProposal = async (req, res) => {
   const proposal = await Proposal.create({title, description, amount, ngoId, image})
   const imp = await Impact.findOneAndUpdate(
     {},
-    { $inc: { noProposals: donation.amount } },
+    { $inc: { noProposals: proposal.amount } },
     { new: true }
   )
  
