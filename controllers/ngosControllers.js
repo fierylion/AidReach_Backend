@@ -1,5 +1,7 @@
 const  NGO  = require('../models/Ngos')
 const { BadRequestError } = require('../errors')
+const { UnauthenticatedError } = require('../errors')
+const Vote = require('../models/Vote')
 const {StatusCodes:status} = require('http-status-codes')
 const Impact = require('../models/Impacts')
 // Register a new NGO
@@ -37,6 +39,20 @@ const loginNGO = async (req, res) => {
     .status(status.OK)
     .json({ ngo: { name: ngo.name, email: ngo.email }, token })
 
+}
+
+
+// Get votes
+const getVotes = async (req, res) => {
+  const {id:ngoId} = req.user;
+  const votes = await Vote.find().populate(
+    {
+      path: 'proposalId',
+      match: {ngoId}
+    }
+  ).exec()
+
+  res.status(status.OK).json({votes})
 }
 
 // Get NGO details by ID
@@ -82,5 +98,6 @@ module.exports = {
   getNGO,
   updateNGO,
   deleteNGO,
-  updateDetails
+  updateDetails,
+  getVotes
 }

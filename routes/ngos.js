@@ -6,6 +6,7 @@ const router = express.Router()
 
 router.route('/register').post(ngosController.registerNGO)
 router.route('/login').post(ngosController.loginNGO)
+router.route('/vote').get(authentication, validateNgo, ngosController.getVotes)
 router.route('').get(authentication,validateNgo,ngosController.getNGO)
 router.route('/verifyDetails').post(authentication, validateNgo, ngosController.updateDetails)
 router.route('/:id').patch(ngosController.updateNGO)

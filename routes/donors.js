@@ -7,6 +7,6 @@ const router = express.Router()
 router.route('/register').post(donorsController.registerDonor)
 router.route('/login').post(donorsController.loginDonor)
 router.route('').get( authenticationMiddleware,validateDonor,donorsController.getDonorById)
-router.route('/vote').post(authenticationMiddleware,validateDonor,donorsController.createVote)
+router.route('/vote').post(authenticationMiddleware,validateDonor,donorsController.createVote).get(authenticationMiddleware,validateDonor,donorsController.getVotes)
 
 module.exports = router

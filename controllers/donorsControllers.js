@@ -61,6 +61,18 @@ const createVote = async (req, res) => {
 
 
 }
+// Get votes
+const getVotes = async (req, res) => {
+  const {from, to} = req.query;
+  if(!from||!to) throw new BadRequestError('Please provide from and to dates')
+  const startDate = new Date(parseInt(from));
+  const endDate = new Date(parseInt(to) );
+
+
+  const {id:donorId} = req.user;
+  const votes = await Vote.find({donorId, createdAt:{$gte:startDate, $lte:endDate}}).exec();
+  res.status(status.OK).json({votes})
+}
   
 // Update donor information
 const updateDonor = async (req, res) => {
@@ -78,5 +90,6 @@ module.exports = {
   getDonorById,
   updateDonor,
   deleteDonor,
-  createVote
+  createVote,
+  getVotes
 }
